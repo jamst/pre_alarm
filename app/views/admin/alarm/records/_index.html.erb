@@ -1,0 +1,23 @@
+<div class="ui grid">
+  <div class="left floated fourteen wide column">
+    <h3><font >告警分析</font></h3><%= link_to "告警设置", admin_alarm_alarms_path , class: 'ui primary button' %>
+  </div>
+</div>
+
+<div class="ui yellow segment"  style='background: rgba(255, 255, 255, 0.2);margin-bottom: 20px;'>
+    <div class="ui six column grid">
+      <% @alarm_records.each do |_| %>
+        <div class="column">
+          <div class="ui left icon input fluid">
+            <div class="ui compact menu">
+              <a data-remote="true" href="/admin/alarm/records/alarm_analysis?id=<%= _.id %>"  class="item">
+                <i class="icon home"></i> 
+                <span style="width: 120px;"><%= _.kpi %></span> 
+                <div class="floating ui label" style="background: #<%=_.color%>"><%= _.alarm_details.actived.size %></div>
+              </a>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+</div>

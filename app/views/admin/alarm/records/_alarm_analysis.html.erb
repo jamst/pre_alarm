@@ -1,0 +1,50 @@
+<div class="whmall_cover">
+  <div class="whmall_slide">
+    <div class="slide-nav"><span class="slide-close" title="关闭">×</span></div>
+    <div class="scroll-wrapper slide-scroll-el ui-scrollbar">
+      <div class="slide_body">
+        <div class="scroll_bar">
+          <div class="detail-tit">
+            <h4><span>名称：<%= @alarm_record&.kpi %> </span></h4>
+            <p class="info-txt">
+              <span>告警kpi阀值：<%= @alarm_record&.kpi_vc %></span>
+              <span>告警kpi比对算法：<%= @alarm_record&.kpi_method %></span>
+            </p>
+            <p class="info-txt">
+              <span>当前告警状态：<%= @alarm_record&.alarm_status %></span>
+            </p>
+            <p class="info-txt">
+              <span>简述：<%= @alarm_record&.describe %></span>
+            </p>
+            <p class="info-txt">
+              <%= link_to "手动触发", fast_find_admin_alarm_records_path(id:@alarm_record.id), class: 'ui primary button' %>
+              <%= link_to "忽略", ignore_admin_alarm_records_path(id:@alarm_record.id), class: 'ui primary button' %>
+            </p>
+            <br>
+          </div>
+          <div class="content">
+              <h4 class="tit"><span> 明细记录</span></h4>
+              <div>
+                  <table class="ui selectable striped celled table">
+                    <thead>
+                      <tr>
+                        <th>告警时间</th>
+                        <th>告警状态</th>
+                      </tr>
+                    </thead>
+                    </tbody>
+                    <% @alarm_details.each do |_|%>
+                      <tr>
+                        <td><%= _.created_at %></td>
+                        <td><%= _.active %></td>
+                      </tr>
+                    <% end %>
+                    </tbody>
+                  </table>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -9,6 +9,19 @@ Rails.application.routes.draw do
         get 'error_mail'
       end
     end
+
+    # 告警监控
+    namespace :alarm do
+     resources :alarms
+      resources :records, only: [:index] do
+        collection do
+          get :alarm_analysis
+          get :ignore
+          get :fast_find
+        end  
+      end
+    end
+    
   end
 
   root to: 'desboard#index'

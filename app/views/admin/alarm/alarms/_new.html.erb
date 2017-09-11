@@ -1,0 +1,61 @@
+
+<%= simple_form_for @alarm, url: admin_alarm_alarms_path , method: :post, remote: true do |f| %>
+  
+    <div id="form_message" class="two fields red" style="margin-left: 15px;display:none;" ></div>
+
+    <div class="two fields">
+      <div class="field">
+        <%= f.input :name , placeholder: "告警名称"%>
+      </div>
+      <div class="field">
+        <%= f.input :action_name, placeholder: "告警方法名称"%>
+      </div>
+    </div>
+    <div class="two fields">
+      <div class="field">
+        <%= f.input :time_gran, as: :select, collection: { '5分钟' => 5, '60分钟' => 60 }, include_blank: '轮询时间粒度', input_html: {class: 'ui search fluid dropdown '} %>
+      </div>
+      <div class="field">
+        <%= f.input :show_type, as: :select, collection: { '1条' => 1, '多条' => 0 }, include_blank: '展示方式', input_html: {class: 'ui search fluid dropdown '} %>
+      </div>
+    </div>
+    <div class="two fields">
+      <div class="field">
+        <input class="jscolor" type=text name="jscolor" value="ab2567">
+      </div> 
+    </div>
+
+    <p class="red">1.阀值设置可以是常量也可以是变量，变量前加@@。</p>
+    <p class="red">2.算法设置中用a代表阀值，用b当前代表比对值，注意为整数比对时添加to_i等。</p>
+    <br/>
+
+    <% @alarm_records.each_with_index do |good_spec, spec_index| %>
+      <%= f.fields_for good_spec, index: spec_index do |pf|%>
+        <div class="tow fields spec" id="spec_of_<%=pf.object&.id%>" field_index="<%= spec_index %>" >
+          <%= pf.input :kpi %>
+          <%= pf.input :kpi_vc %>
+          <%= pf.input :kpi_vn %>
+          <%= pf.input :kpi_method %>
+          <%= pf.input :describe %>
+          <i class="ui icon close red spec_close"  style="margin-top: 28px;"></i>
+        </div>
+      <% end %>
+    <% end %>
+
+    <div class="field">
+      <i class="ui icon plus green" style="cursor: pointer;" onClick="add_new_line(this);"></i>
+    </div>
+
+    <div class="field">
+      <div class="actions ">
+        <div class="ui button primary" id="commition" >提交</div>
+        <div class="ui cancel button">取消</div>
+      </div>
+    </div>
+
+<% end %>
+
+
+<%= javascript_include_tag 'jscolor.min.js' %>
+
+

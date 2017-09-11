@@ -1,0 +1,7 @@
+<tr id="alarm_<%= alarm.id %>" >
+   <td class="center aligned"> <%= alarm.name %> </td>
+   <td class="center aligned"> <%= alarm.created_at.strftime("%Y-%m-%d") %> </td>
+   <td class="center aligned"> 
+     <%= link_to '编辑', edit_admin_alarm_alarm_path(id:alarm.id), remote: true , class: 'ui primary button' %>
+   </td>
+</tr>

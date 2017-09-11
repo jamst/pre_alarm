@@ -1,0 +1,16 @@
+<% if @alarm.errors.blank?  %>
+  $("#alarm_<%= @alarm.id %>").replaceWith("<%= j(render partial: 'list', locals: { alarm: @alarm} ) %>");
+  $("#alarm_modal").modal('hide');
+<% else %>
+  $(".field .red.pointing").remove();
+  <% @alarm.errors.messages.each do |key, value| %>
+    $("#alarm_<%= key %>").parent().addClass('error');
+    $("#alarm_<%= key %>").parent().append("<div class='ui basic red pointing prompt label transition visible'><%= value[0] %></div>");
+  <% end %>
+<% end %>
+
+$(".button").popup();
+$(".icon").popup();
+$(document).find('.dropdown').dropdown({
+    on: 'hover'
+});
