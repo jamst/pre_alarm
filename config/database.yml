@@ -1,0 +1,15 @@
+default: &default
+  adapter: mysql2
+  pool: 5
+  reconnect: true
+  username: root
+  password: 
+
+development:
+  <<: *default
+  database: pre-report
+
+# 配置报表数据源
+from:
+  <<: *default
+  database: pre-report
