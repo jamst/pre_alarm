@@ -7,9 +7,9 @@ default: &default
 
 development:
   <<: *default
-  database: pre-report
+  database: pre_alarm
 
 # 配置报表数据源
 from:
   <<: *default
-  database: pre-report
+  database: pre_alarm

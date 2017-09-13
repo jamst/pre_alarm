@@ -17366,3 +17366,1264 @@ puma (3.9.1) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
 DEPRECATION WARNING: [SIMPLE_FORM] SimpleForm.form_class= is deprecated and will be removed in 4.x. Use SimpleForm.default_form_class= instead (called from block in <top (required)> at /Users/jamst/workbook/tracking/config/initializers/simple_form_semantic.rb:64)
 DEPRECATION WARNING: [SIMPLE_FORM] SimpleForm.form_class= is deprecated and will be removed in 4.x. Use SimpleForm.default_form_class= instead (called from block in <top (required)> at /Users/jamst/workbook/tracking/config/initializers/simple_form_semantic.rb:64)
 DEPRECATION WARNING: [SIMPLE_FORM] SimpleForm.form_class= is deprecated and will be removed in 4.x. Use SimpleForm.default_form_class= instead (called from block in <top (required)> at /Users/jamst/workbook/tracking/config/initializers/simple_form_semantic.rb:64)
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/new_framework_defaults.rb:21)
+DEPRECATION WARNING: [SIMPLE_FORM] SimpleForm.form_class= is deprecated and will be removed in 4.x. Use SimpleForm.default_form_class= instead (called from block in <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/simple_form_semantic.rb:64)
+  [1m[35m (0.3ms)[0m  [1m[35mSET  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (13.5ms)[0m  [1m[35mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL PRIMARY KEY) ENGINE=InnoDB[0m
+  [1m[35m (11.6ms)[0m  [1m[35mCREATE TABLE `ar_internal_metadata` (`key` varchar(255) NOT NULL PRIMARY KEY, `value` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT DATABASE() as db[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT GET_LOCK(3796672469404877790, 0)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Migrating to CreateAlarms (20170901080723)
+  [1m[35m (12.3ms)[0m  [1m[35mCREATE TABLE `alarms` (`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255) COMMENT '告警名称', `action_name` varchar(255) DEFAULT 'default_action_name' COMMENT '告警方法名称', `time_gran` int COMMENT '时间粒度：5分钟／60分钟', `show_type` int DEFAULT 1 COMMENT '展示方式，0多条／1一条', `active` int DEFAULT 1 COMMENT '是否启用，0-否，1-是，-1删除', `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20170901080723')[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateAlarmRecords (20170901080746)
+  [1m[35m (11.6ms)[0m  [1m[35mCREATE TABLE `alarm_records` (`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY, `alarm_id` int, `kpi` varchar(255) COMMENT '告警kpi名称', `kpi_vc` varchar(255) COMMENT '告警kpi阀值', `kpi_vn` varchar(255) COMMENT '告警kpi当前值', `kpi_method` varchar(255) COMMENT '告警kpi比对算法', `describe` varchar(255) COMMENT '简述', `color` varchar(255) DEFAULT '#ff0000' COMMENT '告警显示颜色设置', `active` int DEFAULT 1 COMMENT '是否启用，0-否，1-是，-1删除', `alarm_status` int DEFAULT 0 COMMENT '告警状态，0-停息，1-激活中，2-已关注', `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_alarm_records_on_alarm_id`  (`alarm_id`)) ENGINE=InnoDB[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20170901080746')[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateAlarmDetails (20170901080753)
+  [1m[35m (12.1ms)[0m  [1m[35mCREATE TABLE `alarm_details` (`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY, `alarm_id` int, `alarm_record_id` int, `color` varchar(255) DEFAULT '#ff0000' COMMENT '告警显示颜色', `link_tag` varchar(255) COMMENT '链接', `describe` varchar(255) COMMENT '简述', `active` int DEFAULT 1 COMMENT '是否启用，0-否，1-是，-1删除', `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_alarm_details_on_alarm_id`  (`alarm_id`),  INDEX `index_alarm_details_on_alarm_record_id`  (`alarm_record_id`)) ENGINE=InnoDB[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20170901080753')[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  `ar_internal_metadata`.* FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `ar_internal_metadata` (`key`, `value`, `created_at`, `updated_at`) VALUES ('environment', 'development', '2017-09-13 15:01:16', '2017-09-13 15:01:16')[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT RELEASE_LOCK(3796672469404877790)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSHOW CREATE TABLE `alarm_details`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSHOW TABLE STATUS LIKE 'alarm_details'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSHOW CREATE TABLE `alarm_records`[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSHOW TABLE STATUS LIKE 'alarm_records'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSHOW CREATE TABLE `alarms`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSHOW TABLE STATUS LIKE 'alarms'[0m
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/new_framework_defaults.rb:21)
+DEPRECATION WARNING: [SIMPLE_FORM] SimpleForm.form_class= is deprecated and will be removed in 4.x. Use SimpleForm.default_form_class= instead (called from block in <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/simple_form_semantic.rb:64)
+  [1m[35m (0.3ms)[0m  [1m[35mSET  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS `employees` CASCADE[0m
+  [1m[35m (14.0ms)[0m  [1m[35mCREATE TABLE `employees` (`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY, `email` varchar(255) DEFAULT '' NOT NULL COMMENT 'email', `encrypted_password` varchar(255) DEFAULT '' NOT NULL COMMENT '密码', `parent_id` int DEFAULT 0 COMMENT '上级ID', `created_at` datetime NOT NULL COMMENT '创建日期', `updated_at` datetime NOT NULL COMMENT '修改日期', `name` varchar(20) COMMENT '名字', `department_id` int DEFAULT 0 NOT NULL COMMENT '部门ID', `position_id` int DEFAULT 0 NOT NULL COMMENT '职位： 0:其它 6:财务 7:产品经理....', `position_level` int DEFAULT 0 NOT NULL COMMENT '行政级别 0:员工 1:主管 2:经理 3:总监', `job_status` int DEFAULT 1 NOT NULL COMMENT '在职状态, 1:在职, -1:离职', `weight` float(24) DEFAULT 1.0 NOT NULL COMMENT '权重', `joined_on` date COMMENT '入职日期', `gender` int COMMENT '性别 0:男 1:女', `mobile` varchar(30) COMMENT '手机', `qq` varchar(30) COMMENT 'QQ', `office_tel` varchar(30) COMMENT '公司电话', `dob` date COMMENT '生日', `remember_created_at` datetime COMMENT '记住创建日期', `deputy_department_id` int DEFAULT 0 COMMENT '副部门', `avatar` varchar(100) COMMENT '员工头像', `assign_count` int DEFAULT 0 COMMENT '分配点数', `handover_id` int DEFAULT 0 COMMENT '交接人', UNIQUE INDEX `index_employees_on_email` USING btree (`email`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '员工表'[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS `roles` CASCADE[0m
+  [1m[35m (11.4ms)[0m  [1m[35mCREATE TABLE `roles` (`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255) COMMENT '角色名称', `name_cn` varchar(255) COMMENT '中文名', `created_at` datetime COMMENT '创建日期', `updated_at` datetime COMMENT '修改日期',  INDEX `index_roles_on_name` USING btree (`name`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '角色表'[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS `employees_roles` CASCADE[0m
+  [1m[35m (11.7ms)[0m  [1m[35mCREATE TABLE `employees_roles` (`employee_id` int COMMENT '员工ID', `role_id` int COMMENT '员工权限',  INDEX `index_employees_roles_on_employee_id_and_role_id` USING btree (`employee_id`, `role_id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '员工权限表'[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO `employees` (`email`, `encrypted_password`, `created_at`, `updated_at`, `name`) VALUES ('107422244@qq.com', '$2a$10$dHqBzBTbkUaofs9KEGpB0OqTwEXVmSvNIaC7clqCSsRrwwW/lgXwy', '2017-09-13 15:01:24', '2017-09-13 15:01:24', 'jamst')[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/new_framework_defaults.rb:21)
+DEPRECATION WARNING: [SIMPLE_FORM] SimpleForm.form_class= is deprecated and will be removed in 4.x. Use SimpleForm.default_form_class= instead (called from block in <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/simple_form_semantic.rb:64)
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/new_framework_defaults.rb:21)
+DEPRECATION WARNING: [SIMPLE_FORM] SimpleForm.form_class= is deprecated and will be removed in 4.x. Use SimpleForm.default_form_class= instead (called from block in <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/simple_form_semantic.rb:64)
+Started GET "/cable" for 127.0.0.1 at 2017-09-13 15:02:29 +0800
+  [1m[35m (0.3ms)[0m  [1m[35mSET  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2017-09-13 15:02:29 +0800
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Subscription class not found: "NoticesChannel"
+Started GET "/" for 127.0.0.1 at 2017-09-13 15:02:38 +0800
+  
+ActionController::RoutingError (uninitialized constant DesboardController):
+  
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:269:in `const_get'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:269:in `block in constantize'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `each'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `inject'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `constantize'
+actionpack (5.1.2) lib/action_dispatch/http/request.rb:82:in `controller_class'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:43:in `controller'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:29:in `serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+remotipart (1.3.1) lib/remotipart/middleware.rb:32:in `call'
+warden (1.2.7) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.7) lib/warden/manager.rb:35:in `catch'
+warden (1.2.7) lib/warden/manager.rb:35:in `call'
+rack (2.0.3) lib/rack/etag.rb:25:in `call'
+rack (2.0.3) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.3) lib/rack/head.rb:12:in `call'
+rack (2.0.3) lib/rack/session/abstract/id.rb:232:in `context'
+rack (2.0.3) lib/rack/session/abstract/id.rb:226:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/cookies.rb:613:in `call'
+activerecord (5.1.2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.2) lib/rails/engine.rb:522:in `call'
+puma (3.10.0) lib/puma/configuration.rb:225:in `call'
+puma (3.10.0) lib/puma/server.rb:605:in `handle_request'
+puma (3.10.0) lib/puma/server.rb:437:in `process_client'
+puma (3.10.0) lib/puma/server.rb:301:in `block in run'
+puma (3.10.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/new_framework_defaults.rb:21)
+DEPRECATION WARNING: [SIMPLE_FORM] SimpleForm.form_class= is deprecated and will be removed in 4.x. Use SimpleForm.default_form_class= instead (called from block in <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/simple_form_semantic.rb:64)
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/new_framework_defaults.rb:21)
+DEPRECATION WARNING: [SIMPLE_FORM] SimpleForm.form_class= is deprecated and will be removed in 4.x. Use SimpleForm.default_form_class= instead (called from block in <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/simple_form_semantic.rb:64)
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/new_framework_defaults.rb:21)
+DEPRECATION WARNING: [SIMPLE_FORM] SimpleForm.form_class= is deprecated and will be removed in 4.x. Use SimpleForm.default_form_class= instead (called from block in <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/simple_form_semantic.rb:64)
+Started GET "/cable" for 127.0.0.1 at 2017-09-13 15:04:55 +0800
+  [1m[35m (0.3ms)[0m  [1m[35mSET  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2017-09-13 15:04:55 +0800
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Subscription class not found: "NoticesChannel"
+Started GET "/" for 127.0.0.1 at 2017-09-13 15:04:57 +0800
+  
+ActionController::RoutingError (uninitialized constant Admin::Alarm::Records):
+  
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:271:in `const_get'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:271:in `block in constantize'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `each'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `inject'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `constantize'
+actionpack (5.1.2) lib/action_dispatch/http/request.rb:82:in `controller_class'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:43:in `controller'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:29:in `serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+remotipart (1.3.1) lib/remotipart/middleware.rb:32:in `call'
+warden (1.2.7) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.7) lib/warden/manager.rb:35:in `catch'
+warden (1.2.7) lib/warden/manager.rb:35:in `call'
+rack (2.0.3) lib/rack/etag.rb:25:in `call'
+rack (2.0.3) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.3) lib/rack/head.rb:12:in `call'
+rack (2.0.3) lib/rack/session/abstract/id.rb:232:in `context'
+rack (2.0.3) lib/rack/session/abstract/id.rb:226:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/cookies.rb:613:in `call'
+activerecord (5.1.2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.2) lib/rails/engine.rb:522:in `call'
+puma (3.10.0) lib/puma/configuration.rb:225:in `call'
+puma (3.10.0) lib/puma/server.rb:605:in `handle_request'
+puma (3.10.0) lib/puma/server.rb:437:in `process_client'
+puma (3.10.0) lib/puma/server.rb:301:in `block in run'
+puma (3.10.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/favicon.ico" for 127.0.0.1 at 2017-09-13 15:04:57 +0800
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.2) lib/rails/engine.rb:522:in `call'
+puma (3.10.0) lib/puma/configuration.rb:225:in `call'
+puma (3.10.0) lib/puma/server.rb:605:in `handle_request'
+puma (3.10.0) lib/puma/server.rb:437:in `process_client'
+puma (3.10.0) lib/puma/server.rb:301:in `block in run'
+puma (3.10.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/new_framework_defaults.rb:21)
+DEPRECATION WARNING: [SIMPLE_FORM] SimpleForm.form_class= is deprecated and will be removed in 4.x. Use SimpleForm.default_form_class= instead (called from block in <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/simple_form_semantic.rb:64)
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/new_framework_defaults.rb:21)
+DEPRECATION WARNING: [SIMPLE_FORM] SimpleForm.form_class= is deprecated and will be removed in 4.x. Use SimpleForm.default_form_class= instead (called from block in <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/simple_form_semantic.rb:64)
+Started GET "/" for 127.0.0.1 at 2017-09-13 15:08:08 +0800
+  [1m[35m (0.3ms)[0m  [1m[35mSET  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  
+ActionController::RoutingError (uninitialized constant Admin::EmployeesController):
+  
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:271:in `const_get'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:271:in `block in constantize'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `each'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `inject'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `constantize'
+actionpack (5.1.2) lib/action_dispatch/http/request.rb:82:in `controller_class'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:43:in `controller'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:29:in `serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+remotipart (1.3.1) lib/remotipart/middleware.rb:32:in `call'
+warden (1.2.7) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.7) lib/warden/manager.rb:35:in `catch'
+warden (1.2.7) lib/warden/manager.rb:35:in `call'
+rack (2.0.3) lib/rack/etag.rb:25:in `call'
+rack (2.0.3) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.3) lib/rack/head.rb:12:in `call'
+rack (2.0.3) lib/rack/session/abstract/id.rb:232:in `context'
+rack (2.0.3) lib/rack/session/abstract/id.rb:226:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/cookies.rb:613:in `call'
+activerecord (5.1.2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.2) lib/rails/engine.rb:522:in `call'
+puma (3.10.0) lib/puma/configuration.rb:225:in `call'
+puma (3.10.0) lib/puma/server.rb:605:in `handle_request'
+puma (3.10.0) lib/puma/server.rb:437:in `process_client'
+puma (3.10.0) lib/puma/server.rb:301:in `block in run'
+puma (3.10.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/cable" for 127.0.0.1 at 2017-09-13 15:08:12 +0800
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2017-09-13 15:08:12 +0800
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Subscription class not found: "NoticesChannel"
+Started GET "/" for 127.0.0.1 at 2017-09-13 15:09:53 +0800
+Processing by Admin::Alarm::RecordsController#index as HTML
+Completed 401 Unauthorized in 8ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/admin/login" for 127.0.0.1 at 2017-09-13 15:09:53 +0800
+Processing by Admin::SessionsController#new as HTML
+  Rendering admin/sessions/new.html.erb
+  Rendered admin/sessions/new.html.erb (1182.7ms)
+Completed 200 OK in 1210ms (Views: 1184.9ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/cable" for 127.0.0.1 at 2017-09-13 15:10:03 +0800
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2017-09-13 15:10:03 +0800
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Subscription class not found: "NoticesChannel"
+Started POST "/admin/login" for 127.0.0.1 at 2017-09-13 15:10:10 +0800
+Processing by Admin::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"LLS4M2YoiDTMVBhFMaO9bi2s+T0kX4hbbDbKqddNnplYDr4iPt5CKS79Tc6zPCY0Q8QC0t3e9rlXC06xzs+Smg==", "employee"=>{"email"=>"107422244@qq.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"登录"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`email` = '107422244@qq.com' ORDER BY `employees`.`id` ASC LIMIT 1[0m
+Completed 500 Internal Server Error in 235ms (ActiveRecord: 0.3ms)
+
+
+  
+NameError (undefined local variable or method `temporary_reports_path' for #<Admin::SessionsController:0x007f8a1a163798>):
+  
+app/controllers/admin/sessions_controller.rb:33:in `login_jump_url'
+app/controllers/admin/sessions_controller.rb:18:in `block (2 levels) in create'
+app/controllers/admin/sessions_controller.rb:15:in `create'
+Started POST "/admin/login" for 127.0.0.1 at 2017-09-13 15:11:37 +0800
+Processing by Admin::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"LLS4M2YoiDTMVBhFMaO9bi2s+T0kX4hbbDbKqddNnplYDr4iPt5CKS79Tc6zPCY0Q8QC0t3e9rlXC06xzs+Smg==", "employee"=>{"email"=>"107422244@qq.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"登录"}
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`email` = '107422244@qq.com' ORDER BY `employees`.`id` ASC LIMIT 1[0m
+Redirected to http://localhost:3000/admin/alarm/records
+Completed 302 Found in 82ms (ActiveRecord: 1.2ms)
+
+
+Started GET "/admin/alarm/records" for 127.0.0.1 at 2017-09-13 15:11:38 +0800
+Processing by Admin::Alarm::RecordsController#index as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+Completed 500 Internal Server Error in 10ms (ActiveRecord: 0.3ms)
+
+
+  
+NameError (uninitialized constant AlarmRecord::Activeable):
+  
+app/models/alarm_record.rb:4:in `<class:AlarmRecord>'
+app/models/alarm_record.rb:1:in `<top (required)>'
+app/controllers/admin/alarm/records_controller.rb:4:in `index'
+Started GET "/cable" for 127.0.0.1 at 2017-09-13 15:11:47 +0800
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2017-09-13 15:11:47 +0800
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Subscription class not found: "NoticesChannel"
+Started GET "/admin/alarm/records" for 127.0.0.1 at 2017-09-13 15:16:17 +0800
+Processing by Admin::Alarm::RecordsController#index as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/records/index.html.erb
+  [1m[36mAlarmRecord Load (2.2ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`active` = 1[0m
+  Rendered admin/alarm/records/_index.html.erb (3.1ms)
+  Rendered admin/alarm/records/index.html.erb (4.6ms)
+Completed 200 OK in 35ms (Views: 4.0ms | ActiveRecord: 4.0ms)
+
+
+Started GET "/cable" for 127.0.0.1 at 2017-09-13 15:16:25 +0800
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2017-09-13 15:16:25 +0800
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Subscription class not found: "NoticesChannel"
+Started GET "/admin/alarm/records" for 127.0.0.1 at 2017-09-13 15:16:59 +0800
+Processing by Admin::Alarm::RecordsController#index as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/records/index.html.erb
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`active` = 1[0m
+  Rendered admin/alarm/records/_index.html.erb (1.1ms)
+  Rendered admin/alarm/records/index.html.erb (2.3ms)
+Completed 200 OK in 7ms (Views: 3.2ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/admin/alarm/records" for 127.0.0.1 at 2017-09-13 15:17:51 +0800
+Processing by Admin::Alarm::RecordsController#index as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/records/index.html.erb
+  [1m[36mAlarmRecord Load (0.4ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`active` = 1[0m
+  Rendered admin/alarm/records/_index.html.erb (1.3ms)
+  Rendered admin/alarm/records/index.html.erb (2.7ms)
+Completed 200 OK in 40ms (Views: 11.0ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/admin/alarm/records" for 127.0.0.1 at 2017-09-13 15:17:57 +0800
+Processing by Admin::Alarm::RecordsController#index as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/records/index.html.erb
+  [1m[36mAlarmRecord Load (0.3ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`active` = 1[0m
+  Rendered admin/alarm/records/_index.html.erb (1.4ms)
+  Rendered admin/alarm/records/index.html.erb (2.8ms)
+Completed 200 OK in 15ms (Views: 11.5ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/cable" for 127.0.0.1 at 2017-09-13 15:17:59 +0800
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2017-09-13 15:17:59 +0800
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Subscription class not found: "NoticesChannel"
+Started GET "/admin/alarm/records" for 127.0.0.1 at 2017-09-13 15:18:00 +0800
+Processing by Admin::Alarm::RecordsController#index as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/records/index.html.erb
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`active` = 1[0m
+  Rendered admin/alarm/records/_index.html.erb (1.0ms)
+  Rendered admin/alarm/records/index.html.erb (2.3ms)
+Completed 200 OK in 14ms (Views: 10.9ms | ActiveRecord: 0.5ms)
+
+
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/new_framework_defaults.rb:21)
+DEPRECATION WARNING: [SIMPLE_FORM] SimpleForm.form_class= is deprecated and will be removed in 4.x. Use SimpleForm.default_form_class= instead (called from block in <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/simple_form_semantic.rb:64)
+Started GET "/admin/alarm/records" for 127.0.0.1 at 2017-09-13 15:18:36 +0800
+  [1m[35m (0.3ms)[0m  [1m[35mSET  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Processing by Admin::Alarm::RecordsController#index as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/records/index.html.erb
+  [1m[36mAlarmRecord Load (0.3ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`active` = 1[0m
+  Rendered admin/alarm/records/_index.html.erb (1.5ms)
+  Rendered admin/alarm/records/index.html.erb (3.6ms)
+Completed 200 OK in 62ms (Views: 17.8ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/cable" for 127.0.0.1 at 2017-09-13 15:18:42 +0800
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2017-09-13 15:18:42 +0800
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Subscription class not found: "NoticesChannel"
+Started GET "/admin/alarm/records" for 127.0.0.1 at 2017-09-13 15:19:38 +0800
+Processing by Admin::Alarm::RecordsController#index as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/records/index.html.erb within layouts/application
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`active` = 1[0m
+  Rendered admin/alarm/records/_index.html.erb (1.2ms)
+  Rendered admin/alarm/records/index.html.erb within layouts/application (2.6ms)
+  Rendered shared/admin/_top_bar.html.erb (1.1ms)
+  Rendered shared/admin/_sidebar.html.erb (0.3ms)
+Completed 500 Internal Server Error in 284ms (ActiveRecord: 2.6ms)
+
+
+  
+ActionView::Template::Error (Missing partial shared/_alert with {:locale=>[:zh], :formats=>[:html], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby, :coffee, :jbuilder]}. Searched in:
+  * "/Users/jamst/workbook/pre_alarm/app/views"
+  * "/Users/jamst/.rvm/gems/ruby-2.4.0@pre_alarm/bundler/gems/devise-71fc5b351a8e/app/views"
+  * "/Users/jamst/.rvm/gems/ruby-2.4.0@pre_alarm/bundler/gems/kaminari-6f338aa2d7e3/kaminari-core/app/views"
+):
+    19: 
+    20:           <div class="sixteen wide column" id="content">
+    21:             <div class="thirteen wide column">
+    22:               <%= render 'shared/alert' %>
+    23:               <%= yield %>
+    24:             </div>
+    25:           </div>
+  
+app/views/layouts/application.html.erb:22:in `_app_views_layouts_application_html_erb__3163224263079449201_70313518226500'
+Started GET "/cable" for 127.0.0.1 at 2017-09-13 15:19:46 +0800
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2017-09-13 15:19:46 +0800
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Subscription class not found: "NoticesChannel"
+Started GET "/admin/alarm/records" for 127.0.0.1 at 2017-09-13 15:19:54 +0800
+Processing by Admin::Alarm::RecordsController#index as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/records/index.html.erb within layouts/application
+  [1m[36mAlarmRecord Load (0.3ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`active` = 1[0m
+  Rendered admin/alarm/records/_index.html.erb (1.3ms)
+  Rendered admin/alarm/records/index.html.erb within layouts/application (2.5ms)
+  Rendered shared/admin/_top_bar.html.erb (0.9ms)
+  Rendered shared/admin/_sidebar.html.erb (0.3ms)
+Completed 200 OK in 56ms (Views: 27.8ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/admin/alarm/records" for 127.0.0.1 at 2017-09-13 15:20:06 +0800
+Processing by Admin::Alarm::RecordsController#index as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/records/index.html.erb within layouts/application
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`active` = 1[0m
+  Rendered admin/alarm/records/_index.html.erb (1.0ms)
+  Rendered admin/alarm/records/index.html.erb within layouts/application (2.3ms)
+  Rendered shared/admin/_top_bar.html.erb (1.0ms)
+  Rendered shared/admin/_sidebar.html.erb (0.3ms)
+Completed 200 OK in 34ms (Views: 30.4ms | ActiveRecord: 0.5ms)
+
+
+Started DELETE "/admin/logout" for 127.0.0.1 at 2017-09-13 15:20:08 +0800
+Processing by Admin::SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"uGJm3+4q+h501PReVN4TopRhWsdRZwV+y/T5ZzTvLAHnRU8L7YngF9dcQ/QsXQAUnlh71lzaJr8qetP9kHap4Q=="}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/admin/alarm/records
+Completed 302 Found in 8ms (ActiveRecord: 0.6ms)
+
+
+Started GET "/admin/alarm/records" for 127.0.0.1 at 2017-09-13 15:20:08 +0800
+Processing by Admin::Alarm::RecordsController#index as HTML
+Completed 401 Unauthorized in 3ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/admin/login" for 127.0.0.1 at 2017-09-13 15:20:08 +0800
+Processing by Admin::SessionsController#new as HTML
+  Rendering admin/sessions/new.html.erb
+  Rendered admin/sessions/new.html.erb (41.1ms)
+Completed 200 OK in 44ms (Views: 42.5ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/admin/login" for 127.0.0.1 at 2017-09-13 15:20:19 +0800
+Processing by Admin::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"6GLPQn5De7hLLFhUEDCAYQLp3MhNeWRHihdwbUThIbW1mS3AV10iOLOO0JSMBzUT8B61zscBau9kM1KOe3d8Rg==", "employee"=>{"email"=>"107422244@qq.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"登录"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`email` = '107422244@qq.com' ORDER BY `employees`.`id` ASC LIMIT 1[0m
+Redirected to http://localhost:3000/admin/alarm/records
+Completed 302 Found in 71ms (ActiveRecord: 0.3ms)
+
+
+Started GET "/admin/alarm/records" for 127.0.0.1 at 2017-09-13 15:20:19 +0800
+Processing by Admin::Alarm::RecordsController#index as HTML
+  [1m[36mEmployee Load (0.4ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/records/index.html.erb within layouts/application
+  [1m[36mAlarmRecord Load (0.3ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`active` = 1[0m
+  Rendered admin/alarm/records/_index.html.erb (1.2ms)
+  Rendered admin/alarm/records/index.html.erb within layouts/application (2.5ms)
+  Rendered shared/admin/_top_bar.html.erb (1.0ms)
+  Rendered shared/admin/_sidebar.html.erb (0.3ms)
+Completed 200 OK in 30ms (Views: 25.9ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/admin/alarm/alarms" for 127.0.0.1 at 2017-09-13 15:20:25 +0800
+Processing by Admin::Alarm::AlarmsController#index as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/alarms/index.html.erb within layouts/application
+  Rendered admin/alarm/alarms/index.html.erb within layouts/application (10.5ms)
+Completed 500 Internal Server Error in 21ms (ActiveRecord: 0.3ms)
+
+
+  
+ActionView::Template::Error (undefined method `admin?' for #<Employee:0x007fe6495883b0>):
+    27:   <% end %>
+    28: </div>
+    29: 
+    30: <% if current_employee.admin? %>
+    31: <div class="ui grid">
+    32:   <div class="left floated wide column">
+    33:     <%= link_to "新建", new_admin_alarm_alarm_path , remote: true, class: 'ui primary button' %>
+  
+app/views/admin/alarm/alarms/index.html.erb:30:in `_app_views_admin_alarm_alarms_index_html_erb__3856603450261249747_70313524708200'
+Started GET "/admin/alarm/alarms" for 127.0.0.1 at 2017-09-13 15:21:59 +0800
+Processing by Admin::Alarm::AlarmsController#index as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/alarms/index.html.erb within layouts/application
+  [1m[36mAlarm Load (0.3ms)[0m  [1m[34mSELECT  `alarms`.* FROM `alarms` ORDER BY `alarms`.`id` DESC LIMIT 20 OFFSET 0[0m
+  Rendered collection of admin/alarm/alarms/_list.html.erb [0 times] (0.0ms)
+  Rendered admin/alarm/alarms/index.html.erb within layouts/application (8.0ms)
+  Rendered shared/admin/_top_bar.html.erb (1.1ms)
+  Rendered shared/admin/_sidebar.html.erb (0.3ms)
+Completed 200 OK in 33ms (Views: 29.5ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/admin/alarm/alarms/new" for 127.0.0.1 at 2017-09-13 15:22:10 +0800
+Processing by Admin::Alarm::AlarmsController#new as JS
+  [1m[36mEmployee Load (0.4ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/alarms/new.js.erb
+DEPRECATION WARNING: The asset "jscolor.min.js" is not present in the asset pipeline.Falling back to an asset that may be in the public folder.
+This behavior is deprecated and will be removed.
+To bypass the asset pipeline and preserve this behavior,
+use the `skip_pipeline: true` option.
+ (called from _app_views_admin_alarm_alarms__new_html_erb___908424712156998442_70313539060000 at /Users/jamst/workbook/pre_alarm/app/views/admin/alarm/alarms/_new.html.erb:59)
+  Rendered admin/alarm/alarms/_new.html.erb (12.5ms)
+  Rendered admin/alarm/alarms/new.js.erb (25.0ms)
+Completed 200 OK in 75ms (Views: 47.5ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/javascripts/jscolor.min.js" for 127.0.0.1 at 2017-09-13 15:22:10 +0800
+  
+ActionController::RoutingError (No route matches [GET] "/javascripts/jscolor.min.js"):
+  
+actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.2) lib/rails/engine.rb:522:in `call'
+puma (3.10.0) lib/puma/configuration.rb:225:in `call'
+puma (3.10.0) lib/puma/server.rb:605:in `handle_request'
+puma (3.10.0) lib/puma/server.rb:437:in `process_client'
+puma (3.10.0) lib/puma/server.rb:301:in `block in run'
+puma (3.10.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/admin/alarm/alarms/new" for 127.0.0.1 at 2017-09-13 15:22:29 +0800
+Processing by Admin::Alarm::AlarmsController#new as JS
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/alarms/new.js.erb
+DEPRECATION WARNING: The asset "jscolor.min.js" is not present in the asset pipeline.Falling back to an asset that may be in the public folder.
+This behavior is deprecated and will be removed.
+To bypass the asset pipeline and preserve this behavior,
+use the `skip_pipeline: true` option.
+ (called from _app_views_admin_alarm_alarms__new_html_erb___908424712156998442_70313525477420 at /Users/jamst/workbook/pre_alarm/app/views/admin/alarm/alarms/_new.html.erb:59)
+  Rendered admin/alarm/alarms/_new.html.erb (11.5ms)
+  Rendered admin/alarm/alarms/new.js.erb (26.5ms)
+Completed 200 OK in 60ms (Views: 47.5ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/javascripts/jscolor.min.js" for 127.0.0.1 at 2017-09-13 15:22:30 +0800
+  
+ActionController::RoutingError (No route matches [GET] "/javascripts/jscolor.min.js"):
+  
+actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.2) lib/rails/engine.rb:522:in `call'
+puma (3.10.0) lib/puma/configuration.rb:225:in `call'
+puma (3.10.0) lib/puma/server.rb:605:in `handle_request'
+puma (3.10.0) lib/puma/server.rb:437:in `process_client'
+puma (3.10.0) lib/puma/server.rb:301:in `block in run'
+puma (3.10.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/admin/alarm/alarms/new" for 127.0.0.1 at 2017-09-13 15:22:36 +0800
+Processing by Admin::Alarm::AlarmsController#new as JS
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/alarms/new.js.erb
+DEPRECATION WARNING: The asset "jscolor.min.js" is not present in the asset pipeline.Falling back to an asset that may be in the public folder.
+This behavior is deprecated and will be removed.
+To bypass the asset pipeline and preserve this behavior,
+use the `skip_pipeline: true` option.
+ (called from _app_views_admin_alarm_alarms__new_html_erb___908424712156998442_70313500518920 at /Users/jamst/workbook/pre_alarm/app/views/admin/alarm/alarms/_new.html.erb:59)
+  Rendered admin/alarm/alarms/_new.html.erb (9.7ms)
+  Rendered admin/alarm/alarms/new.js.erb (21.4ms)
+Completed 200 OK in 58ms (Views: 45.8ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/javascripts/jscolor.min.js" for 127.0.0.1 at 2017-09-13 15:22:36 +0800
+  
+ActionController::RoutingError (No route matches [GET] "/javascripts/jscolor.min.js"):
+  
+actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.2) lib/rails/engine.rb:522:in `call'
+puma (3.10.0) lib/puma/configuration.rb:225:in `call'
+puma (3.10.0) lib/puma/server.rb:605:in `handle_request'
+puma (3.10.0) lib/puma/server.rb:437:in `process_client'
+puma (3.10.0) lib/puma/server.rb:301:in `block in run'
+puma (3.10.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/new_framework_defaults.rb:21)
+DEPRECATION WARNING: [SIMPLE_FORM] SimpleForm.form_class= is deprecated and will be removed in 4.x. Use SimpleForm.default_form_class= instead (called from block in <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/simple_form_semantic.rb:64)
+Started GET "/cable" for 127.0.0.1 at 2017-09-13 15:24:33 +0800
+  [1m[35m (0.3ms)[0m  [1m[35mSET  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2017-09-13 15:24:33 +0800
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Subscription class not found: "NoticesChannel"
+Started GET "/admin/alarm/alarms" for 127.0.0.1 at 2017-09-13 15:24:33 +0800
+Processing by Admin::Alarm::AlarmsController#index as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/alarms/index.html.erb within layouts/application
+  [1m[36mAlarm Load (0.3ms)[0m  [1m[34mSELECT  `alarms`.* FROM `alarms` ORDER BY `alarms`.`id` DESC LIMIT 20 OFFSET 0[0m
+  Rendered collection of admin/alarm/alarms/_list.html.erb [0 times] (0.0ms)
+  Rendered admin/alarm/alarms/index.html.erb within layouts/application (42.5ms)
+  Rendered shared/admin/_top_bar.html.erb (4.1ms)
+  Rendered shared/admin/_sidebar.html.erb (0.3ms)
+Completed 200 OK in 983ms (Views: 925.3ms | ActiveRecord: 4.4ms)
+
+
+Started GET "/admin/alarm/alarms/new" for 127.0.0.1 at 2017-09-13 15:24:37 +0800
+Processing by Admin::Alarm::AlarmsController#new as JS
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/alarms/new.js.erb
+  Rendered admin/alarm/alarms/_new.html.erb (64.9ms)
+  Rendered admin/alarm/alarms/new.js.erb (76.6ms)
+Completed 500 Internal Server Error in 150ms (ActiveRecord: 1.6ms)
+
+
+  
+ActionView::Template::Error (Asset was not declared to be precompiled in production.
+Add `Rails.application.config.assets.precompile += %w( jscolor.min.js )` to `config/initializers/assets.rb` and restart your server):
+    56: <% end %>
+    57: 
+    58: 
+    59: <%= javascript_include_tag 'jscolor.min.js' %>
+  
+app/views/admin/alarm/alarms/_new.html.erb:59:in `_app_views_admin_alarm_alarms__new_html_erb___2867159432870406058_70246097802800'
+app/views/admin/alarm/alarms/new.js.erb:2:in `_app_views_admin_alarm_alarms_new_js_erb___851334981275466270_70246131821240'
+Started GET "/admin/alarm/alarms" for 127.0.0.1 at 2017-09-13 15:25:32 +0800
+Processing by Admin::Alarm::AlarmsController#index as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/alarms/index.html.erb within layouts/application
+  [1m[36mAlarm Load (0.3ms)[0m  [1m[34mSELECT  `alarms`.* FROM `alarms` ORDER BY `alarms`.`id` DESC LIMIT 20 OFFSET 0[0m
+  Rendered collection of admin/alarm/alarms/_list.html.erb [0 times] (0.0ms)
+  Rendered admin/alarm/alarms/index.html.erb within layouts/application (6.0ms)
+  Rendered shared/admin/_top_bar.html.erb (0.9ms)
+  Rendered shared/admin/_sidebar.html.erb (0.2ms)
+Completed 200 OK in 32ms (Views: 28.5ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/admin/alarm/alarms/new" for 127.0.0.1 at 2017-09-13 15:25:34 +0800
+Processing by Admin::Alarm::AlarmsController#new as JS
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/alarms/new.js.erb
+  Rendered admin/alarm/alarms/_new.html.erb (33.0ms)
+  Rendered admin/alarm/alarms/new.js.erb (47.3ms)
+Completed 500 Internal Server Error in 80ms (ActiveRecord: 0.3ms)
+
+
+  
+ActionView::Template::Error (Asset was not declared to be precompiled in production.
+Add `Rails.application.config.assets.precompile += %w( jscolor.min.js )` to `config/initializers/assets.rb` and restart your server):
+    56: <% end %>
+    57: 
+    58: 
+    59: <%= javascript_include_tag 'jscolor.min.js' %>
+  
+app/views/admin/alarm/alarms/_new.html.erb:59:in `_app_views_admin_alarm_alarms__new_html_erb___2867159432870406058_70246093859700'
+app/views/admin/alarm/alarms/new.js.erb:2:in `_app_views_admin_alarm_alarms_new_js_erb___851334981275466270_70246133576000'
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/new_framework_defaults.rb:21)
+DEPRECATION WARNING: [SIMPLE_FORM] SimpleForm.form_class= is deprecated and will be removed in 4.x. Use SimpleForm.default_form_class= instead (called from block in <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/simple_form_semantic.rb:64)
+Started GET "/cable" for 127.0.0.1 at 2017-09-13 15:25:47 +0800
+  [1m[35m (0.3ms)[0m  [1m[35mSET  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2017-09-13 15:25:47 +0800
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Subscription class not found: "NoticesChannel"
+Started GET "/admin/alarm/alarms/new" for 127.0.0.1 at 2017-09-13 15:25:49 +0800
+Processing by Admin::Alarm::AlarmsController#new as JS
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/alarms/new.js.erb
+  Rendered admin/alarm/alarms/_new.html.erb (236.2ms)
+  Rendered admin/alarm/alarms/new.js.erb (248.9ms)
+Completed 200 OK in 351ms (Views: 274.6ms | ActiveRecord: 2.6ms)
+
+
+Started POST "/admin/alarm/alarms" for 127.0.0.1 at 2017-09-13 15:27:00 +0800
+Processing by Admin::Alarm::AlarmsController#create as JS
+  Parameters: {"utf8"=>"✓", "alarm"=>{"name"=>"test", "action_name"=>"default_action_name", "time_gran"=>"60", "show_type"=>"1", "alarm_record"=>{"0"=>{"kpi"=>"客户数量", "kpi_vc"=>"2", "kpi_vn"=>"@@employee.all.size", "kpi_method"=>"a <= b", "describe"=>"客户数"}}}, "jscolor"=>"AB2567"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+Unpermitted parameters: :show_type, :alarm_record
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO `alarms` (`name`, `time_gran`, `created_at`, `updated_at`) VALUES ('test', 60, '2017-09-13 15:27:00', '2017-09-13 15:27:00')[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `alarm_records` (`alarm_id`, `kpi`, `kpi_vc`, `kpi_vn`, `kpi_method`, `describe`, `color`, `created_at`, `updated_at`) VALUES (1, '客户数量', '2', '@@employee.all.size', 'a <= b', '客户数', 'AB2567', '2017-09-13 15:27:00', '2017-09-13 15:27:00')[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCOMMIT[0m
+  Rendering admin/alarm/alarms/create.js.erb
+  Rendered admin/alarm/alarms/_list.html.erb (0.8ms)
+  Rendered admin/alarm/alarms/create.js.erb (13.0ms)
+Completed 200 OK in 65ms (Views: 34.3ms | ActiveRecord: 2.8ms)
+
+
+Started GET "/admin/alarm/alarms/1/edit" for 127.0.0.1 at 2017-09-13 15:27:02 +0800
+Processing by Admin::Alarm::AlarmsController#edit as JS
+  Parameters: {"id"=>"1"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[36mAlarm Load (0.3ms)[0m  [1m[34mSELECT  `alarms`.* FROM `alarms` WHERE `alarms`.`id` = 1 LIMIT 1[0m
+  Rendering admin/alarm/alarms/edit.js.erb
+  [1m[36mAlarmRecord Load (2.6ms)[0m  [1m[34mSELECT  `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`alarm_id` = 1 ORDER BY `alarm_records`.`id` DESC LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`alarm_id` = 1[0m
+  Rendered admin/alarm/alarms/_edit.html.erb (15.6ms)
+  Rendered admin/alarm/alarms/edit.js.erb (28.1ms)
+Completed 200 OK in 69ms (Views: 50.1ms | ActiveRecord: 3.4ms)
+
+
+Started GET "/admin/alarm/records" for 127.0.0.1 at 2017-09-13 15:27:07 +0800
+Processing by Admin::Alarm::RecordsController#index as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/records/index.html.erb within layouts/application
+  [1m[36mAlarmRecord Load (0.3ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`active` = 1[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM `alarm_details` WHERE `alarm_details`.`alarm_record_id` = 1 AND `alarm_details`.`active` = 1[0m
+  Rendered admin/alarm/records/_index.html.erb (9.6ms)
+  Rendered admin/alarm/records/index.html.erb within layouts/application (10.9ms)
+  Rendered shared/admin/_top_bar.html.erb (1.8ms)
+  Rendered shared/admin/_sidebar.html.erb (0.3ms)
+Completed 200 OK in 62ms (Views: 57.4ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/admin/alarm/records/alarm_analysis?id=1" for 127.0.0.1 at 2017-09-13 15:27:16 +0800
+Processing by Admin::Alarm::RecordsController#alarm_analysis as JS
+  Parameters: {"id"=>"1"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT  `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`id` = 1 LIMIT 1[0m
+  Rendering admin/alarm/records/alarm_analysis.js.erb
+  [1m[36mAlarmDetail Load (0.3ms)[0m  [1m[34mSELECT  `alarm_details`.* FROM `alarm_details` WHERE `alarm_details`.`alarm_record_id` = 1 ORDER BY `alarm_details`.`id` DESC LIMIT 10[0m
+  Rendered admin/alarm/records/_alarm_analysis.html.erb (1.6ms)
+  Rendered admin/alarm/records/alarm_analysis.js.erb (14.0ms)
+Completed 200 OK in 53ms (Views: 37.5ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/admin/alarm/records/fast_find?id=1" for 127.0.0.1 at 2017-09-13 15:27:17 +0800
+Processing by Admin::Alarm::RecordsController#fast_find as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT  `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`id` = 1 LIMIT 1[0m
+  [1m[36mAlarm Load (0.2ms)[0m  [1m[34mSELECT  `alarms`.* FROM `alarms` WHERE `alarms`.`id` = 1 LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`alarm_id` = 1[0m
+Completed 500 Internal Server Error in 13ms (ActiveRecord: 1.0ms)
+
+
+  
+NameError (undefined local variable or method `employee' for #<Alarm:0x007fc779a690f8>):
+  
+app/models/alarm.rb:29:in `eval'
+(eval):1:in `block in default_action_name'
+app/models/alarm.rb:29:in `eval'
+app/models/alarm.rb:29:in `block in default_action_name'
+app/models/alarm.rb:27:in `default_action_name'
+app/models/alarm_record.rb:20:in `fast_find'
+app/controllers/admin/alarm/records_controller.rb:23:in `fast_find'
+Started GET "/admin/alarm/alarms" for 127.0.0.1 at 2017-09-13 15:27:26 +0800
+Processing by Admin::Alarm::AlarmsController#index as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/alarms/index.html.erb within layouts/application
+  [1m[36mAlarm Load (0.3ms)[0m  [1m[34mSELECT  `alarms`.* FROM `alarms` ORDER BY `alarms`.`id` DESC LIMIT 20 OFFSET 0[0m
+  Rendered collection of admin/alarm/alarms/_list.html.erb [1 times] (0.6ms)
+  Rendered admin/alarm/alarms/index.html.erb within layouts/application (7.1ms)
+  Rendered shared/admin/_top_bar.html.erb (1.0ms)
+  Rendered shared/admin/_sidebar.html.erb (0.3ms)
+Completed 200 OK in 37ms (Views: 32.3ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/admin/alarm/alarms/1/edit" for 127.0.0.1 at 2017-09-13 15:27:28 +0800
+Processing by Admin::Alarm::AlarmsController#edit as JS
+  Parameters: {"id"=>"1"}
+  [1m[36mEmployee Load (0.4ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[36mAlarm Load (0.3ms)[0m  [1m[34mSELECT  `alarms`.* FROM `alarms` WHERE `alarms`.`id` = 1 LIMIT 1[0m
+  Rendering admin/alarm/alarms/edit.js.erb
+  [1m[36mAlarmRecord Load (0.3ms)[0m  [1m[34mSELECT  `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`alarm_id` = 1 ORDER BY `alarm_records`.`id` DESC LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`alarm_id` = 1[0m
+  Rendered admin/alarm/alarms/_edit.html.erb (14.0ms)
+  Rendered admin/alarm/alarms/edit.js.erb (26.0ms)
+Completed 200 OK in 64ms (Views: 50.0ms | ActiveRecord: 1.1ms)
+
+
+Started PUT "/admin/alarm/alarms/1" for 127.0.0.1 at 2017-09-13 15:27:36 +0800
+Processing by Admin::Alarm::AlarmsController#update as JS
+  Parameters: {"utf8"=>"✓", "alarm"=>{"name"=>"test", "action_name"=>"default_action_name", "time_gran"=>"60", "show_type"=>"1", "alarm_record"=>{"0"=>{"kpi"=>"客户数量", "kpi_vc"=>"2", "kpi_vn"=>"@@Employee.all.size", "kpi_method"=>"a <= b", "describe"=>"客户数", "id"=>"1"}}}, "jscolor"=>"AB2567", "id"=>"1"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 0.3ms)
+
+
+  
+NameError (uninitialized constant Admin::Alarm::AlarmsController::TemporaryReport):
+  
+app/controllers/admin/alarm/alarms_controller.rb:32:in `update'
+Started PUT "/admin/alarm/alarms/1" for 127.0.0.1 at 2017-09-13 15:29:15 +0800
+Processing by Admin::Alarm::AlarmsController#update as JS
+  Parameters: {"utf8"=>"✓", "alarm"=>{"name"=>"test", "action_name"=>"default_action_name", "time_gran"=>"60", "show_type"=>"1", "alarm_record"=>{"0"=>{"kpi"=>"客户数量", "kpi_vc"=>"2", "kpi_vn"=>"@@Employee.all.size", "kpi_method"=>"a <= b", "describe"=>"客户数", "id"=>"1"}}}, "jscolor"=>"AB2567", "id"=>"1"}
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAlarm Load (0.2ms)[0m  [1m[34mSELECT  `alarms`.* FROM `alarms` WHERE `alarms`.`id` = 1 LIMIT 1[0m
+Unpermitted parameters: :show_type, :alarm_record
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT  `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`id` = 1 LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE `alarm_records` SET `kpi_vn` = '@@Employee.all.size', `updated_at` = '2017-09-13 15:29:15' WHERE `alarm_records`.`id` = 1[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCOMMIT[0m
+  Rendering admin/alarm/alarms/update.js.erb
+  Rendered admin/alarm/alarms/_list.html.erb (0.7ms)
+  Rendered admin/alarm/alarms/update.js.erb (11.7ms)
+Completed 200 OK in 113ms (Views: 36.3ms | ActiveRecord: 6.0ms)
+
+
+Started GET "/admin/alarm/alarms/1/edit" for 127.0.0.1 at 2017-09-13 15:29:17 +0800
+Processing by Admin::Alarm::AlarmsController#edit as JS
+  Parameters: {"id"=>"1"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[36mAlarm Load (0.2ms)[0m  [1m[34mSELECT  `alarms`.* FROM `alarms` WHERE `alarms`.`id` = 1 LIMIT 1[0m
+  Rendering admin/alarm/alarms/edit.js.erb
+  [1m[36mAlarmRecord Load (0.3ms)[0m  [1m[34mSELECT  `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`alarm_id` = 1 ORDER BY `alarm_records`.`id` DESC LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.3ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`alarm_id` = 1[0m
+  Rendered admin/alarm/alarms/_edit.html.erb (17.5ms)
+  Rendered admin/alarm/alarms/edit.js.erb (29.6ms)
+Completed 200 OK in 68ms (Views: 53.3ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/admin/alarm/records" for 127.0.0.1 at 2017-09-13 15:29:20 +0800
+Processing by Admin::Alarm::RecordsController#index as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/records/index.html.erb within layouts/application
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`active` = 1[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM `alarm_details` WHERE `alarm_details`.`alarm_record_id` = 1 AND `alarm_details`.`active` = 1[0m
+  Rendered admin/alarm/records/_index.html.erb (9.9ms)
+  Rendered admin/alarm/records/index.html.erb within layouts/application (11.3ms)
+  Rendered shared/admin/_top_bar.html.erb (1.9ms)
+  Rendered shared/admin/_sidebar.html.erb (0.3ms)
+Completed 200 OK in 47ms (Views: 42.8ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/admin/alarm/records/alarm_analysis?id=1" for 127.0.0.1 at 2017-09-13 15:29:21 +0800
+Processing by Admin::Alarm::RecordsController#alarm_analysis as JS
+  Parameters: {"id"=>"1"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT  `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`id` = 1 LIMIT 1[0m
+  Rendering admin/alarm/records/alarm_analysis.js.erb
+  [1m[36mAlarmDetail Load (0.3ms)[0m  [1m[34mSELECT  `alarm_details`.* FROM `alarm_details` WHERE `alarm_details`.`alarm_record_id` = 1 ORDER BY `alarm_details`.`id` DESC LIMIT 10[0m
+  Rendered admin/alarm/records/_alarm_analysis.html.erb (1.9ms)
+  Rendered admin/alarm/records/alarm_analysis.js.erb (14.4ms)
+Completed 200 OK in 52ms (Views: 37.4ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/admin/alarm/records/fast_find?id=1" for 127.0.0.1 at 2017-09-13 15:29:24 +0800
+Processing by Admin::Alarm::RecordsController#fast_find as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT  `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`id` = 1 LIMIT 1[0m
+  [1m[36mAlarm Load (0.3ms)[0m  [1m[34mSELECT  `alarms`.* FROM `alarms` WHERE `alarms`.`id` = 1 LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`alarm_id` = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM `employees`[0m
+Completed 500 Internal Server Error in 7ms (ActiveRecord: 1.2ms)
+
+
+  
+ArgumentError (comparison of String with 1 failed):
+  
+app/models/alarm_record.rb:15:in `eval'
+(eval):1:in `kpi_method_execute'
+app/models/alarm_record.rb:15:in `eval'
+app/models/alarm_record.rb:15:in `kpi_method_execute'
+app/models/alarm.rb:30:in `block in default_action_name'
+app/models/alarm.rb:27:in `default_action_name'
+app/models/alarm_record.rb:20:in `fast_find'
+app/controllers/admin/alarm/records_controller.rb:23:in `fast_find'
+Started GET "/cable" for 127.0.0.1 at 2017-09-13 15:29:24 +0800
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2017-09-13 15:29:24 +0800
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Subscription class not found: "NoticesChannel"
+Started GET "/admin/alarm/alarms" for 127.0.0.1 at 2017-09-13 15:29:32 +0800
+Processing by Admin::Alarm::AlarmsController#index as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/alarms/index.html.erb within layouts/application
+  [1m[36mAlarm Load (0.3ms)[0m  [1m[34mSELECT  `alarms`.* FROM `alarms` ORDER BY `alarms`.`id` DESC LIMIT 20 OFFSET 0[0m
+  Rendered collection of admin/alarm/alarms/_list.html.erb [1 times] (0.6ms)
+  Rendered admin/alarm/alarms/index.html.erb within layouts/application (7.0ms)
+  Rendered shared/admin/_top_bar.html.erb (1.1ms)
+  Rendered shared/admin/_sidebar.html.erb (0.3ms)
+Completed 200 OK in 35ms (Views: 30.2ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/admin/alarm/alarms/1/edit" for 127.0.0.1 at 2017-09-13 15:29:34 +0800
+Processing by Admin::Alarm::AlarmsController#edit as JS
+  Parameters: {"id"=>"1"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[36mAlarm Load (0.2ms)[0m  [1m[34mSELECT  `alarms`.* FROM `alarms` WHERE `alarms`.`id` = 1 LIMIT 1[0m
+  Rendering admin/alarm/alarms/edit.js.erb
+  [1m[36mAlarmRecord Load (0.3ms)[0m  [1m[34mSELECT  `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`alarm_id` = 1 ORDER BY `alarm_records`.`id` DESC LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`alarm_id` = 1[0m
+  Rendered admin/alarm/alarms/_edit.html.erb (12.1ms)
+  Rendered admin/alarm/alarms/edit.js.erb (23.3ms)
+Completed 200 OK in 58ms (Views: 44.1ms | ActiveRecord: 1.0ms)
+
+
+Started PUT "/admin/alarm/alarms/1" for 127.0.0.1 at 2017-09-13 15:29:48 +0800
+Processing by Admin::Alarm::AlarmsController#update as JS
+  Parameters: {"utf8"=>"✓", "alarm"=>{"name"=>"test", "action_name"=>"default_action_name", "time_gran"=>"60", "show_type"=>"1", "alarm_record"=>{"0"=>{"kpi"=>"客户数量", "kpi_vc"=>"2", "kpi_vn"=>"@@Employee.all.size", "kpi_method"=>"a.to_i <= b.to_i", "describe"=>"客户数", "id"=>"1"}}}, "jscolor"=>"AB2567", "id"=>"1"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAlarm Load (0.2ms)[0m  [1m[34mSELECT  `alarms`.* FROM `alarms` WHERE `alarms`.`id` = 1 LIMIT 1[0m
+Unpermitted parameters: :show_type, :alarm_record
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT  `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`id` = 1 LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE `alarm_records` SET `kpi_method` = 'a.to_i <= b.to_i', `updated_at` = '2017-09-13 15:29:48' WHERE `alarm_records`.`id` = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  Rendering admin/alarm/alarms/update.js.erb
+  Rendered admin/alarm/alarms/_list.html.erb (0.6ms)
+  Rendered admin/alarm/alarms/update.js.erb (11.9ms)
+Completed 200 OK in 51ms (Views: 33.0ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/admin/alarm/alarms/1/edit" for 127.0.0.1 at 2017-09-13 15:29:49 +0800
+Processing by Admin::Alarm::AlarmsController#edit as JS
+  Parameters: {"id"=>"1"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[36mAlarm Load (0.2ms)[0m  [1m[34mSELECT  `alarms`.* FROM `alarms` WHERE `alarms`.`id` = 1 LIMIT 1[0m
+  Rendering admin/alarm/alarms/edit.js.erb
+  [1m[36mAlarmRecord Load (0.3ms)[0m  [1m[34mSELECT  `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`alarm_id` = 1 ORDER BY `alarm_records`.`id` DESC LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`alarm_id` = 1[0m
+  Rendered admin/alarm/alarms/_edit.html.erb (12.4ms)
+  Rendered admin/alarm/alarms/edit.js.erb (23.8ms)
+Completed 200 OK in 58ms (Views: 44.5ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/admin/alarm/records" for 127.0.0.1 at 2017-09-13 15:29:52 +0800
+Processing by Admin::Alarm::RecordsController#index as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/records/index.html.erb within layouts/application
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`active` = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM `alarm_details` WHERE `alarm_details`.`alarm_record_id` = 1 AND `alarm_details`.`active` = 1[0m
+  Rendered admin/alarm/records/_index.html.erb (2.4ms)
+  Rendered admin/alarm/records/index.html.erb within layouts/application (3.7ms)
+  Rendered shared/admin/_top_bar.html.erb (1.1ms)
+  Rendered shared/admin/_sidebar.html.erb (0.3ms)
+Completed 200 OK in 30ms (Views: 26.9ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/admin/alarm/records/alarm_analysis?id=1" for 127.0.0.1 at 2017-09-13 15:29:53 +0800
+Processing by Admin::Alarm::RecordsController#alarm_analysis as JS
+  Parameters: {"id"=>"1"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT  `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`id` = 1 LIMIT 1[0m
+  Rendering admin/alarm/records/alarm_analysis.js.erb
+  [1m[36mAlarmDetail Load (0.4ms)[0m  [1m[34mSELECT  `alarm_details`.* FROM `alarm_details` WHERE `alarm_details`.`alarm_record_id` = 1 ORDER BY `alarm_details`.`id` DESC LIMIT 10[0m
+  Rendered admin/alarm/records/_alarm_analysis.html.erb (1.9ms)
+  Rendered admin/alarm/records/alarm_analysis.js.erb (13.4ms)
+Completed 200 OK in 49ms (Views: 34.9ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/admin/alarm/records/fast_find?id=1" for 127.0.0.1 at 2017-09-13 15:29:54 +0800
+Processing by Admin::Alarm::RecordsController#fast_find as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT  `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`id` = 1 LIMIT 1[0m
+  [1m[36mAlarm Load (0.2ms)[0m  [1m[34mSELECT  `alarms`.* FROM `alarms` WHERE `alarms`.`id` = 1 LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`alarm_id` = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM `employees`[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/admin/alarm/records
+Completed 302 Found in 7ms (ActiveRecord: 1.3ms)
+
+
+Started GET "/admin/alarm/records" for 127.0.0.1 at 2017-09-13 15:29:54 +0800
+Processing by Admin::Alarm::RecordsController#index as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/records/index.html.erb within layouts/application
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`active` = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM `alarm_details` WHERE `alarm_details`.`alarm_record_id` = 1 AND `alarm_details`.`active` = 1[0m
+  Rendered admin/alarm/records/_index.html.erb (2.4ms)
+  Rendered admin/alarm/records/index.html.erb within layouts/application (3.7ms)
+  Rendered shared/admin/_top_bar.html.erb (1.1ms)
+  Rendered shared/admin/_sidebar.html.erb (0.3ms)
+Completed 200 OK in 30ms (Views: 26.6ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/admin/alarm/records/alarm_analysis?id=1" for 127.0.0.1 at 2017-09-13 15:29:56 +0800
+Processing by Admin::Alarm::RecordsController#alarm_analysis as JS
+  Parameters: {"id"=>"1"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT  `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`id` = 1 LIMIT 1[0m
+  Rendering admin/alarm/records/alarm_analysis.js.erb
+  [1m[36mAlarmDetail Load (0.3ms)[0m  [1m[34mSELECT  `alarm_details`.* FROM `alarm_details` WHERE `alarm_details`.`alarm_record_id` = 1 ORDER BY `alarm_details`.`id` DESC LIMIT 10[0m
+  Rendered admin/alarm/records/_alarm_analysis.html.erb (1.8ms)
+  Rendered admin/alarm/records/alarm_analysis.js.erb (13.3ms)
+Completed 200 OK in 48ms (Views: 34.6ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/admin/alarm/alarms" for 127.0.0.1 at 2017-09-13 15:30:08 +0800
+Processing by Admin::Alarm::AlarmsController#index as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/alarms/index.html.erb within layouts/application
+  [1m[36mAlarm Load (0.2ms)[0m  [1m[34mSELECT  `alarms`.* FROM `alarms` ORDER BY `alarms`.`id` DESC LIMIT 20 OFFSET 0[0m
+  Rendered collection of admin/alarm/alarms/_list.html.erb [1 times] (0.6ms)
+  Rendered admin/alarm/alarms/index.html.erb within layouts/application (6.5ms)
+  Rendered shared/admin/_top_bar.html.erb (4.3ms)
+  Rendered shared/admin/_sidebar.html.erb (0.3ms)
+Completed 200 OK in 38ms (Views: 34.7ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/admin/alarm/alarms/1/edit" for 127.0.0.1 at 2017-09-13 15:30:10 +0800
+Processing by Admin::Alarm::AlarmsController#edit as JS
+  Parameters: {"id"=>"1"}
+  [1m[36mEmployee Load (0.4ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[36mAlarm Load (0.2ms)[0m  [1m[34mSELECT  `alarms`.* FROM `alarms` WHERE `alarms`.`id` = 1 LIMIT 1[0m
+  Rendering admin/alarm/alarms/edit.js.erb
+  [1m[36mAlarmRecord Load (0.3ms)[0m  [1m[34mSELECT  `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`alarm_id` = 1 ORDER BY `alarm_records`.`id` DESC LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`alarm_id` = 1[0m
+  Rendered admin/alarm/alarms/_edit.html.erb (15.5ms)
+  Rendered admin/alarm/alarms/edit.js.erb (27.9ms)
+Completed 200 OK in 65ms (Views: 51.6ms | ActiveRecord: 1.1ms)
+
+
+Started PUT "/admin/alarm/alarms/1" for 127.0.0.1 at 2017-09-13 15:30:17 +0800
+Processing by Admin::Alarm::AlarmsController#update as JS
+  Parameters: {"utf8"=>"✓", "alarm"=>{"name"=>"test", "action_name"=>"default_action_name", "time_gran"=>"60", "show_type"=>"1", "alarm_record"=>{"0"=>{"kpi"=>"客户数量", "kpi_vc"=>"1", "kpi_vn"=>"@@Employee.all.size", "kpi_method"=>"a.to_i <= b.to_i", "describe"=>"客户数", "id"=>"1"}}}, "jscolor"=>"AB2567", "id"=>"1"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[35m (6.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAlarm Load (0.2ms)[0m  [1m[34mSELECT  `alarms`.* FROM `alarms` WHERE `alarms`.`id` = 1 LIMIT 1[0m
+Unpermitted parameters: :show_type, :alarm_record
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT  `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`id` = 1 LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[33mUPDATE `alarm_records` SET `kpi_vc` = '1', `updated_at` = '2017-09-13 15:30:17' WHERE `alarm_records`.`id` = 1[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCOMMIT[0m
+  Rendering admin/alarm/alarms/update.js.erb
+  Rendered admin/alarm/alarms/_list.html.erb (0.6ms)
+  Rendered admin/alarm/alarms/update.js.erb (11.8ms)
+Completed 200 OK in 62ms (Views: 37.1ms | ActiveRecord: 8.8ms)
+
+
+Started GET "/admin/alarm/records" for 127.0.0.1 at 2017-09-13 15:30:19 +0800
+Processing by Admin::Alarm::RecordsController#index as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/records/index.html.erb within layouts/application
+  [1m[36mAlarmRecord Load (0.3ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`active` = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM `alarm_details` WHERE `alarm_details`.`alarm_record_id` = 1 AND `alarm_details`.`active` = 1[0m
+  Rendered admin/alarm/records/_index.html.erb (2.6ms)
+  Rendered admin/alarm/records/index.html.erb within layouts/application (3.8ms)
+  Rendered shared/admin/_top_bar.html.erb (1.0ms)
+  Rendered shared/admin/_sidebar.html.erb (0.3ms)
+Completed 200 OK in 30ms (Views: 27.1ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/admin/alarm/records/alarm_analysis?id=1" for 127.0.0.1 at 2017-09-13 15:30:20 +0800
+Processing by Admin::Alarm::RecordsController#alarm_analysis as JS
+  Parameters: {"id"=>"1"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT  `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`id` = 1 LIMIT 1[0m
+  Rendering admin/alarm/records/alarm_analysis.js.erb
+  [1m[36mAlarmDetail Load (0.3ms)[0m  [1m[34mSELECT  `alarm_details`.* FROM `alarm_details` WHERE `alarm_details`.`alarm_record_id` = 1 ORDER BY `alarm_details`.`id` DESC LIMIT 10[0m
+  Rendered admin/alarm/records/_alarm_analysis.html.erb (1.6ms)
+  Rendered admin/alarm/records/alarm_analysis.js.erb (13.5ms)
+Completed 200 OK in 52ms (Views: 37.8ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/admin/alarm/records/fast_find?id=1" for 127.0.0.1 at 2017-09-13 15:30:21 +0800
+Processing by Admin::Alarm::RecordsController#fast_find as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT  `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`id` = 1 LIMIT 1[0m
+  [1m[36mAlarm Load (0.4ms)[0m  [1m[34mSELECT  `alarms`.* FROM `alarms` WHERE `alarms`.`id` = 1 LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`alarm_id` = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM `employees`[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[33mUPDATE `alarm_records` SET `alarm_status` = 1, `updated_at` = '2017-09-13 15:30:21' WHERE `alarm_records`.`id` = 1[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `alarm_details` (`alarm_id`, `alarm_record_id`, `color`, `describe`, `created_at`, `updated_at`) VALUES (1, 1, 'AB2567', '客户数', '2017-09-13 15:30:21', '2017-09-13 15:30:21')[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Completed 500 Internal Server Error in 19ms (ActiveRecord: 4.4ms)
+
+
+  
+NameError (uninitialized constant Alarm::Notification):
+  
+app/models/alarm.rb:33:in `block in default_action_name'
+app/models/alarm.rb:27:in `default_action_name'
+app/models/alarm_record.rb:20:in `fast_find'
+app/controllers/admin/alarm/records_controller.rb:23:in `fast_find'
+Started GET "/admin/alarm/records/fast_find?id=1" for 127.0.0.1 at 2017-09-13 15:31:01 +0800
+Processing by Admin::Alarm::RecordsController#fast_find as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT  `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`id` = 1 LIMIT 1[0m
+  [1m[36mAlarm Load (0.2ms)[0m  [1m[34mSELECT  `alarms`.* FROM `alarms` WHERE `alarms`.`id` = 1 LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.3ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`alarm_id` = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM `employees`[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `alarm_details` (`alarm_id`, `alarm_record_id`, `color`, `describe`, `created_at`, `updated_at`) VALUES (1, 1, 'AB2567', '客户数', '2017-09-13 15:31:01', '2017-09-13 15:31:01')[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/admin/alarm/records
+Completed 302 Found in 75ms (ActiveRecord: 6.6ms)
+
+
+Started GET "/admin/alarm/records" for 127.0.0.1 at 2017-09-13 15:31:01 +0800
+Processing by Admin::Alarm::RecordsController#index as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/records/index.html.erb within layouts/application
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`active` = 1[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM `alarm_details` WHERE `alarm_details`.`alarm_record_id` = 1 AND `alarm_details`.`active` = 1[0m
+  Rendered admin/alarm/records/_index.html.erb (3.6ms)
+  Rendered admin/alarm/records/index.html.erb within layouts/application (7.2ms)
+  Rendered shared/admin/_top_bar.html.erb (1.1ms)
+  Rendered shared/admin/_sidebar.html.erb (0.3ms)
+Completed 200 OK in 40ms (Views: 36.9ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/admin/alarm/records/alarm_analysis?id=1" for 127.0.0.1 at 2017-09-13 15:31:03 +0800
+Processing by Admin::Alarm::RecordsController#alarm_analysis as JS
+  Parameters: {"id"=>"1"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.3ms)[0m  [1m[34mSELECT  `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`id` = 1 LIMIT 1[0m
+  Rendering admin/alarm/records/alarm_analysis.js.erb
+  [1m[36mAlarmDetail Load (0.3ms)[0m  [1m[34mSELECT  `alarm_details`.* FROM `alarm_details` WHERE `alarm_details`.`alarm_record_id` = 1 ORDER BY `alarm_details`.`id` DESC LIMIT 10[0m
+  Rendered admin/alarm/records/_alarm_analysis.html.erb (3.1ms)
+  Rendered admin/alarm/records/alarm_analysis.js.erb (14.8ms)
+Completed 200 OK in 53ms (Views: 39.0ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/admin/alarm/records/alarm_analysis?id=1" for 127.0.0.1 at 2017-09-13 15:31:07 +0800
+Processing by Admin::Alarm::RecordsController#alarm_analysis as JS
+  Parameters: {"id"=>"1"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT  `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`id` = 1 LIMIT 1[0m
+  Rendering admin/alarm/records/alarm_analysis.js.erb
+  [1m[36mAlarmDetail Load (0.4ms)[0m  [1m[34mSELECT  `alarm_details`.* FROM `alarm_details` WHERE `alarm_details`.`alarm_record_id` = 1 ORDER BY `alarm_details`.`id` DESC LIMIT 10[0m
+  Rendered admin/alarm/records/_alarm_analysis.html.erb (2.1ms)
+  Rendered admin/alarm/records/alarm_analysis.js.erb (13.8ms)
+Completed 200 OK in 51ms (Views: 37.1ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/cable" for 127.0.0.1 at 2017-09-13 15:31:08 +0800
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2017-09-13 15:31:08 +0800
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Subscription class not found: "NoticesChannel"
+Started GET "/admin/alarm/records/fast_find?id=1" for 127.0.0.1 at 2017-09-13 15:31:09 +0800
+Processing by Admin::Alarm::RecordsController#fast_find as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT  `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`id` = 1 LIMIT 1[0m
+  [1m[36mAlarm Load (0.2ms)[0m  [1m[34mSELECT  `alarms`.* FROM `alarms` WHERE `alarms`.`id` = 1 LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`alarm_id` = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM `employees`[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `alarm_details` (`alarm_id`, `alarm_record_id`, `color`, `describe`, `created_at`, `updated_at`) VALUES (1, 1, 'AB2567', '客户数', '2017-09-13 15:31:09', '2017-09-13 15:31:09')[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/admin/alarm/records
+Completed 302 Found in 11ms (ActiveRecord: 3.5ms)
+
+
+Started GET "/admin/alarm/records" for 127.0.0.1 at 2017-09-13 15:31:09 +0800
+Processing by Admin::Alarm::RecordsController#index as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/records/index.html.erb within layouts/application
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`active` = 1[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM `alarm_details` WHERE `alarm_details`.`alarm_record_id` = 1 AND `alarm_details`.`active` = 1[0m
+  Rendered admin/alarm/records/_index.html.erb (2.4ms)
+  Rendered admin/alarm/records/index.html.erb within layouts/application (3.6ms)
+  Rendered shared/admin/_top_bar.html.erb (1.6ms)
+  Rendered shared/admin/_sidebar.html.erb (0.3ms)
+Completed 200 OK in 32ms (Views: 29.2ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/admin/alarm/records/alarm_analysis?id=1" for 127.0.0.1 at 2017-09-13 15:31:11 +0800
+Processing by Admin::Alarm::RecordsController#alarm_analysis as JS
+  Parameters: {"id"=>"1"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[36mAlarmRecord Load (0.2ms)[0m  [1m[34mSELECT  `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`id` = 1 LIMIT 1[0m
+  Rendering admin/alarm/records/alarm_analysis.js.erb
+  [1m[36mAlarmDetail Load (0.3ms)[0m  [1m[34mSELECT  `alarm_details`.* FROM `alarm_details` WHERE `alarm_details`.`alarm_record_id` = 1 ORDER BY `alarm_details`.`id` DESC LIMIT 10[0m
+  Rendered admin/alarm/records/_alarm_analysis.html.erb (2.2ms)
+  Rendered admin/alarm/records/alarm_analysis.js.erb (14.5ms)
+Completed 200 OK in 53ms (Views: 39.0ms | ActiveRecord: 0.8ms)
+
+

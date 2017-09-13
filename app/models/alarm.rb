@@ -30,7 +30,6 @@ class Alarm < ApplicationRecord
          if _.kpi_method_execute 
             _.update(alarm_status:1) 
             AlarmDetail.create(alarm_id:_.alarm_id, alarm_record_id:_.id, color:_.color, describe:_.describe) 
-            WhUtils::set_employee_message(1,"#{_.describe}","/admin/alarm/records",1) unless Notification.where("body = '#{_.describe}' and read_at is null").present?
          else
             _.update(alarm_status:0)
          end   

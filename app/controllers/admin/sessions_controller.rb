@@ -24,13 +24,13 @@ class Admin::SessionsController < Devise::SessionsController
   def destroy
     Rails.cache.delete("current_employee_#{current_employee.id}".to_sym)
     sign_out
-    redirect_to temporary_reports_path
+    redirect_to admin_alarm_records_path
     #super
   end
 
   # 登录后不同角色跳转
   def login_jump_url
-   temporary_reports_path
+   admin_alarm_records_path
   end
 
   # protected

@@ -29,7 +29,7 @@ class Admin::Alarm::AlarmsController < Admin::BaseController
   end
 
   def update
-    TemporaryReport.transaction do 
+    ::Alarm.transaction do 
       @alarm = ::Alarm.find(params[:id])	
       @alarm.update(alarm_params)
       params[:alarm][:alarm_record].each do |index, spec|

@@ -27,14 +27,12 @@
   <% end %>
 </div>
 
-<% if current_employee.admin? %>
 <div class="ui grid">
   <div class="left floated wide column">
     <%= link_to "新建", new_admin_alarm_alarm_path , remote: true, class: 'ui primary button' %>
     <%= link_to "告警分析", admin_alarm_records_path , class: 'ui primary button' %>
   </div>
 </div>
-<% end %>
 
 <div class="ui blue segment">
     <table class="ui selectable striped celled table">
