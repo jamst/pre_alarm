@@ -18627,3 +18627,24 @@ Processing by Admin::Alarm::RecordsController#alarm_analysis as JS
 Completed 200 OK in 53ms (Views: 39.0ms | ActiveRecord: 0.8ms)
 
 
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/new_framework_defaults.rb:21)
+DEPRECATION WARNING: [SIMPLE_FORM] SimpleForm.form_class= is deprecated and will be removed in 4.x. Use SimpleForm.default_form_class= instead (called from block in <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/simple_form_semantic.rb:64)
+Started GET "/admin/alarm/records" for 127.0.0.1 at 2017-09-13 15:34:10 +0800
+  [1m[35m (0.3ms)[0m  [1m[35mSET  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Processing by Admin::Alarm::RecordsController#index as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  `employees`.* FROM `employees` WHERE `employees`.`id` = 1 ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  Rendering admin/alarm/records/index.html.erb within layouts/application
+  [1m[36mAlarmRecord Load (0.3ms)[0m  [1m[34mSELECT `alarm_records`.* FROM `alarm_records` WHERE `alarm_records`.`active` = 1[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM `alarm_details` WHERE `alarm_details`.`alarm_record_id` = 1 AND `alarm_details`.`active` = 1[0m
+  Rendered admin/alarm/records/_index.html.erb (27.5ms)
+  Rendered admin/alarm/records/index.html.erb within layouts/application (32.4ms)
+  Rendered shared/admin/_top_bar.html.erb (2.0ms)
+  Rendered shared/admin/_sidebar.html.erb (0.3ms)
+Completed 200 OK in 1234ms (Views: 1184.9ms | ActiveRecord: 3.1ms)
+
+
+Started GET "/cable" for 127.0.0.1 at 2017-09-13 15:34:23 +0800
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2017-09-13 15:34:23 +0800
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Subscription class not found: "NoticesChannel"
