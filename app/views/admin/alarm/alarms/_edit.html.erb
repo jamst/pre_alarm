@@ -13,8 +13,7 @@
     </div>
     <div class="two fields">
       <div class="field">
-        <%= f.input :time_gran, as: :select, collection: { '5分钟' => 5, '60分钟' => 60 }, include_blank: '轮询时间粒度', input_html: {class: 'ui search fluid dropdown '} %>
-      </div>
+        <%= f.input :time_gran, as: :select, collection: { '5分钟' => 5, '60分钟' => 60 , '每天下午5点' => -5}, include_blank: '轮询时间粒度', input_html: {class: 'ui search fluid dropdown '} %>
       <div class="field">
         <%= f.input :show_type, as: :select, collection: { '1条' => 1, '多条' => 0 }, include_blank: '展示方式', input_html: {class: 'ui search fluid dropdown '} %>
       </div>
