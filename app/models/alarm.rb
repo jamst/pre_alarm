@@ -47,7 +47,7 @@ class Alarm < ApplicationRecord
                 end
                 des = eval %Q( %Q(#{_.describe}) ) 
                 AlarmDetail.create(alarm_id:_.alarm_id, alarm_record_id:_.id, color:_.color, describe:des) 
-                WhUtils::set_employee_message(1,"#{des}","/admin/alarm/records",1) unless Notification.where("body = '#{_.describe}' and read_at is null").present?
+                Employee::set_employee_message(employee_id: self.employee_id,body: "#{des}",url: "/admin/alarm/records",publish_id: 1) unless Notification.where("body = '#{_.describe}' and read_at is null").present?
              else
                 _.update(alarm_status:0)
              end   
@@ -60,7 +60,7 @@ class Alarm < ApplicationRecord
               _.update(alarm_status:1) 
               des = eval %Q( %Q(#{_.describe}) ) 
               AlarmDetail.create(alarm_id:_.alarm_id, alarm_record_id:_.id, color:_.color, describe:des) 
-              WhUtils::set_employee_message(1,"#{des}","/admin/alarm/records",1) unless Notification.where("body = '#{_.describe}' and read_at is null").present?
+              Employee::set_employee_message(employee_id: self.employee_id,body: "#{des}",url: "/admin/alarm/records",publish_id: 1) unless Notification.where("body = '#{_.describe}' and read_at is null").present?
            else
               _.update(alarm_status:0)
            end

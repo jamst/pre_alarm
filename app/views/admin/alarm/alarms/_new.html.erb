@@ -23,6 +23,9 @@
       <div class="field">
         <input class="jscolor" type=text name="jscolor" value="ab2567">
       </div> 
+      <div class="field">
+        <%= f.input :employee_id, as: :select, collection: Employee.get_all_with_options, include_blank: '选择接收人员', input_html: {class: 'ui search fluid dropdown '} %>
+      </div> 
     </div>
 
     <p class="red">1.阀值设置可以是常量也可以是变量，变量前加@@。</p>

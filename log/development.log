@@ -18656,3 +18656,38 @@ Started GET "/cable" for 127.0.0.1 at 2017-09-13 15:40:35 +0800
 Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2017-09-13 15:40:35 +0800
 Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
 Subscription class not found: "NoticesChannel"
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/new_framework_defaults.rb:21)
+DEPRECATION WARNING: [SIMPLE_FORM] SimpleForm.form_class= is deprecated and will be removed in 4.x. Use SimpleForm.default_form_class= instead (called from block in <top (required)> at /Users/jamst/workbook/pre_alarm/config/initializers/simple_form_semantic.rb:64)
+  [1m[35m (3.6ms)[0m  [1m[35mSET  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT DATABASE() as db[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT GET_LOCK(3796672469404877790, 0)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Migrating to CreateNotification (20170110025557)
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS `notifications`[0m
+  [1m[35m (21.0ms)[0m  [1m[35mCREATE TABLE `notifications` (`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY, `receiver_type` varchar(255), `receiver_id` int, `publisher_id` int, `state` int DEFAULT 0, `title` varchar(255), `body` varchar(5000), `link` varchar(255), `sent_at` datetime, `sent_code` varchar(255), `sent_result` varchar(255), `read_at` datetime, `notifiable_type` varchar(255), `notifiable_id` int, `sending_at` datetime, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_notifications_on_receiver_type_and_receiver_id`  (`receiver_type`, `receiver_id`),  INDEX `index_notifications_on_publisher_id`  (`publisher_id`),  INDEX `index_notifications_on_read_at`  (`read_at`)) ENGINE=InnoDB[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20170110025557')[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddEmployeeIdToAlarms (20181218095824)
+  [1m[35m (41.0ms)[0m  [1m[35mALTER TABLE `alarms` ADD `employee_id` int DEFAULT 1 COMMENT '接收人'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181218095824')[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  `ar_internal_metadata`.* FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT RELEASE_LOCK(3796672469404877790)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSHOW CREATE TABLE `alarm_details`[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSHOW TABLE STATUS LIKE 'alarm_details'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSHOW CREATE TABLE `alarm_records`[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSHOW TABLE STATUS LIKE 'alarm_records'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSHOW CREATE TABLE `alarms`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSHOW TABLE STATUS LIKE 'alarms'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSHOW CREATE TABLE `employees`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSHOW TABLE STATUS LIKE 'employees'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSHOW CREATE TABLE `employees_roles`[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSHOW CREATE TABLE `notifications`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSHOW TABLE STATUS LIKE 'notifications'[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSHOW CREATE TABLE `roles`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSHOW TABLE STATUS LIKE 'roles'[0m
